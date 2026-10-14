@@ -23,10 +23,15 @@ public class Autor {
     @JsonProperty("nomeAutor")
     private String nomeAutor;
 
-    @Column(name = "ds_nacionalidade", nullable = false)
+    @Column(name = "ds_livro", nullable = false)
+    @JsonProperty("livro")
+    @OneToMany
+    @JoinColumn
+    private String livro;
+
+    @Column(name = "ds_", nullable = false)
     @JsonProperty("nacionalidade")
     private String nacionalidade;
-
     // Adicione a relação com Livro aqui
 
 }

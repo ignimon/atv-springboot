@@ -1,5 +1,7 @@
 package biblioteca.biblioteca.Model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,15 +25,11 @@ public class Autor {
     @JsonProperty("nomeAutor")
     private String nomeAutor;
 
-    @Column(name = "ds_livro", nullable = false)
-    @JsonProperty("livro")
-    @OneToMany
-    @JoinColumn
-    private String livro;
-
-    @Column(name = "ds_", nullable = false)
+    @Column(name = "ds_nacionalidade", nullable = false)
     @JsonProperty("nacionalidade")
     private String nacionalidade;
-    // Adicione a relação com Livro aqui
+
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
+    private List<Livro> livros;
 
 }

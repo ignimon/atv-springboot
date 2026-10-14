@@ -16,18 +16,16 @@ import lombok.NoArgsConstructor;
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
-    private Long id;
+    @JsonProperty("isbn")
+    private Long isbn;
 
     @Column(name = "ds_tituloLivro", nullable = false)
     @JsonProperty("tituloLivro")
     private String tituloLivro;
 
-    @Column(name = "ds_autorLivro", nullable = false)
-    @JsonProperty("autorLivro")
     @ManyToOne
-    @JoinColumn()
-    private String autorLivro;
+    @JoinColumn(name = "id_autor")
+    private String id_autor;
 
     @Column(name = "ds_anoLivro", nullable = false)
     @JsonProperty("anoLivro")
@@ -39,9 +37,6 @@ public class Livro {
 
 }
 
-
-
-// livro (isbn titulo autor ano edicao) ->
 //criacao exclusao atualizacao busca
 //busca isbn titulo
 //autor removido, CASCADE

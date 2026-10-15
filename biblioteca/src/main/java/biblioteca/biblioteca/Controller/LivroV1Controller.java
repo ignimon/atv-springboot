@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/autores", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AutorV1Controller {
+public class LivroV1Controller {
 
     @Autowired
     AutorCrudService autorCrudService;

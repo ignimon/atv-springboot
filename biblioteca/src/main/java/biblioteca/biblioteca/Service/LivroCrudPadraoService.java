@@ -1,7 +1,9 @@
 package biblioteca.biblioteca.Service;
 
+import biblioteca.biblioteca.Dto.AutorResponseDto;
 import biblioteca.biblioteca.Dto.LivroPostPutDto;
 import biblioteca.biblioteca.Dto.LivroResponseDto;
+import biblioteca.biblioteca.Model.Autor;
 import biblioteca.biblioteca.Model.Livro;
 import biblioteca.biblioteca.Repository.AutorRepository;
 import biblioteca.biblioteca.Repository.LivroRepository;
@@ -11,22 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 
 @Service
 public class LivroCrudPadraoService implements LivroCrudService {
-
-    private final Repository.LivroRepository livroRepository;
 
     @Autowired
     ModelMapper modelMapper;
 
     @Autowired
-    AutorRepository autorRepository;
-
-    LivroCrudPadraoService(Repository.LivroRepository livroRepository) {
-        this.livroRepository = livroRepository;
-    }
+    LivroRepository livroRepository;
 
     @Override
     public LivroResponseDto criarLivro(LivroPostPutDto livroPostPutDto) {
@@ -35,21 +30,25 @@ public class LivroCrudPadraoService implements LivroCrudService {
     }
 
     @Override
-    public LivroResponseDto atualizarLivro(LivroPostPutDto livroPostPutDto) {
-        Livro 
+    public LivroResponseDto atualizarLivro(LivroPostPutDto livroPostPutDto, Long id) {
+        Livro livro = obterLivroExistente(id);
+        modelMapper.map(livroPostPutDto, livro);
+        return modelMapper.map(livroRepository.save(livro), LivroResponseDto.class);
     }
 
     @Override
-    public LivroResponseDto buscarLivro(LivroPostPutDto livroPostPutDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarLivro'");
+    public LivroResponseDto buscarLivro(LivroPostPutDto livroPostPutDto, Long id) {
+        return modelMapper.map(obterLivroExistente(id), LivroResponseDto.class);
     }
 
     @Override
-    public void removerLivro(Long isbn) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removerLivro'");
+    public void removerLivro(Long id) {
+        livroRepository.deleteById(id);
     }
 
+    public Livro obterLivroExistente(Long id){
+        return livroRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Livro não encontrado."));
+    }
 
 }

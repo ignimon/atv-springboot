@@ -10,7 +10,8 @@ public interface LivroCrudService {
 
     LivroResponseDto atualizarLivro(LivroPostPutDto livroPostPutDto, Long id);
 
-    LivroResponseDto buscarLivro(LivroPostPutDto livroPostPutDto, Long id);
+    LivroResponseDto buscarLivro(Long id);
 
     void removerLivro(Long id);
+
 }

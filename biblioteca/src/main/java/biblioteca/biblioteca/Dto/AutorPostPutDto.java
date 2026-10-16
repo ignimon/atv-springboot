@@ -19,4 +19,5 @@ public class AutorPostPutDto {
     @JsonProperty("nacionalidade")
     @NotBlank(message = "Nacionalidade do autor não pode ser vazia")
     private String nacionalidade;
+
 }
